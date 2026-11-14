@@ -1,0 +1,31 @@
+
+name: Restore BARON project structure
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract foundation
+        run: |
+          mkdir -p /tmp/baron-foundation
+          unzip -o ARMSHIN_BARON_Foundation.zip -d /tmp/baron-foundation
+          cp -R /tmp/baron-foundation/ARMSHIN_BARON_Foundation/. .
+
+      - name: Commit correct structure
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm -f --ignore-unmatch globals.css layout.tsx next.config.mjs package.json page.tsx schema.sql tsconfig.json
+          git add -A
+          git commit -m "Restore BARON project structure" || echo "No changes to commit"
+          git push
