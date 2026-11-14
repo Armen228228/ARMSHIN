@@ -1,0 +1,47 @@
+
+name: BARON Setup
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check ZIP
+        run: |
+          if [ ! -f ARMSHIN_BARON_Foundation.zip ]; then
+            echo "Foundation ZIP not found"
+            exit 1
+          fi
+
+      - name: Extract ZIP
+        run: |
+          mkdir -p /tmp/baron
+          unzip -o ARMSHIN_BARON_Foundation.zip -d /tmp/baron
+          find /tmp/baron -maxdepth 4 -type f
+
+      - name: Restore files
+        run: |
+          ROOT=$(find /tmp/baron -type d -name apps | head -n 1)
+          if [ -z "$ROOT" ]; then
+            echo "apps folder not found"
+            exit 1
+          fi
+          BASE=$(dirname "$ROOT")
+          cp -R "$BASE"/. .
+
+      - name: Save changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Restore BARON structure" || echo "No changes"
+          git push
