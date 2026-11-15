@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARMSHIN - Պրոֆեսիոնալ Շինարարություն և Վերանորոգում</title>
+    <title>ARMSHIN - Պրոֆեսիոնալ Շինարարություն և Վերանորոգում Հայաստանում</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans">
+<body class="bg-slate-950 text-slate-100 font-sans selection:bg-amber-500 selection:text-slate-950">
     <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-800">
+    <header class="fixed top-0 left-0 right-0 z-50 bg-slate-900/85 backdrop-blur-md border-b border-slate-800/80">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <div class="text-2xl font-black tracking-wider text-amber-500">ARMSHIN</div>
             <nav class="hidden md:flex gap-8 text-sm font-medium text-slate-300">
@@ -17,8 +18,7 @@
                 <a href="#contact" class="hover:text-amber-400 transition">Կապ</a>
             </nav>
             <div class="flex items-center gap-4">
-                <a href="baron.html" class="text-xs bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-500/30 px-3 py-2 rounded-lg font-semibold transition">BARON Կառավարում</a>
-                <button onclick="toggleChat()" class="bg-amber-600 hover:bg-amber-500 text-white px-4 py-2 rounded-xl text-sm font-semibold transition shadow-lg shadow-amber-600/20">AI Խորհրդատու</button>
+                <button onclick="toggleChat()" class="bg-amber-600 hover:bg-amber-500 text-white px-5 py-2.5 rounded-xl text-sm font-bold transition shadow-lg shadow-amber-600/20">AI Խորհրդատու</button>
             </div>
         </div>
     </header>
@@ -27,14 +27,14 @@
     <section class="relative h-screen flex items-center justify-center pt-20">
         <div class="absolute inset-0 z-0">
             <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop" alt="Evening Luxury House" class="w-full h-full object-cover opacity-40">
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent"></div>
         </div>
         <div class="relative z-10 max-w-4xl mx-auto text-center px-6">
-            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6">Բարձրակարգ շինարարություն և հիմնական վերանորոգում Հայաստանում</h1>
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6">Բարձրակարգ շինարարություն և հիմնական վերանորոգում</h1>
             <p class="text-lg md:text-xl text-slate-300 mb-8 max-w-2xl mx-auto">Վստահեք ձեր տան կառուցումն ու նորոգումը մասնագետներին: Անհատական մոտեցում, ֆիքսված ժամկետներ և բարձր որակ:</p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <button onclick="toggleChat()" class="bg-amber-600 hover:bg-amber-500 text-white font-bold px-8 py-4 rounded-xl transition shadow-xl shadow-amber-600/30">Սկսել AI Խորհրդատվություն</button>
-                <a href="#services" class="bg-slate-900/80 hover:bg-slate-800 text-slate-200 border border-slate-700 font-bold px-8 py-4 rounded-xl transition">Ծառայություններ</a>
+                <a href="#services" class="bg-slate-900/80 hover:bg-slate-800 text-slate-200 border border-slate-700/80 font-bold px-8 py-4 rounded-xl transition">Ծառայություններ</a>
             </div>
         </div>
     </section>
@@ -62,47 +62,73 @@
     </section>
 
     <!-- AI Chat Widget Floating -->
-    <div id="ai-chat-widget" class="fixed bottom-6 right-6 z-50 hidden w-96 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col h-[500px]">
+    <div id="ai-chat-widget" class="fixed bottom-6 right-6 z-50 hidden w-96 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col h-[520px]">
         <div class="bg-slate-800 p-4 flex items-center justify-between border-b border-slate-700">
             <div class="flex items-center gap-3">
                 <div class="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></div>
                 <span class="font-bold text-sm">ARMSHIN AI Խորհրդատու</span>
             </div>
-            <button onclick="toggleChat()" class="text-slate-400 hover:text-white">&times;</button>
+            <button onclick="toggleChat()" class="text-slate-400 hover:text-white text-xl font-bold">&times;</button>
         </div>
         <div id="chat-messages" class="flex-1 p-4 overflow-y-auto space-y-3 text-sm">
             <div class="bg-slate-800/60 p-3 rounded-xl max-w-[85%]">
-                Բարև ձեզ։ Ես ARMSHIN-ի արհեստական բանականության խորհրդատուն եմ։ Ինչպիսի՞ շինարարական կամ վերանորոգման աշխատանք եք պլանավորում։
+                Բարև ձեզ։ Ես ARMSHIN-ի արհեստական բանականության խորհրդատուն եմ։ Ինչպիսի՞ շինարարական կամ վերանորոգման աշխատանք եք պլանավորում։ Գրեք ձեր անունը, հեռախոսահամարը և ցանկալի ծառայությունը։
             </div>
         </div>
         <div class="p-3 bg-slate-900 border-t border-slate-800 flex gap-2">
-            <input type="text" id="chat-input" placeholder="Գրեք ձեր հարցը..." class="flex-1 bg-slate-800 border border-slate-700 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-amber-500">
-            <button onclick="sendMessage()" class="bg-amber-600 hover:bg-amber-500 px-4 py-2 rounded-xl text-sm font-bold transition">Ուղարկել</button>
+            <input type="text" id="chat-input" placeholder="Օր. Արմեն, +37491123456, Վերանորոգում..." class="flex-1 bg-slate-800 border border-slate-700 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-amber-500">
+            <button onclick="sendLeadMessage()" class="bg-amber-600 hover:bg-amber-500 px-4 py-2 rounded-xl text-sm font-bold transition">Ուղարկել</button>
         </div>
     </div>
 
     <script>
+        // Այստեղ լրացրu քո Supabase տվյալները (Project URL և Anon Key), որպեսզի հայտերն ուղիղ գնան բազա
+        const SUPABASE_URL = 'https://YOUR_SUPABASE_URL.supabase.co';
+        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+        const supabaseClient = window.supabase && SUPABASE_URL !== 'https://YOUR_SUPABASE_URL.supabase.co' 
+            ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) 
+            : null;
+
         function toggleChat() {
             const widget = document.getElementById('ai-chat-widget');
             widget.classList.toggle('hidden');
         }
-        function sendMessage() {
+
+        async function sendLeadMessage() {
             const input = document.getElementById('chat-input');
             const container = document.getElementById('chat-messages');
-            if(!input.value.trim()) return;
+            const text = input.value.trim();
+            if(!text) return;
             
             const userMsg = document.createElement('div');
             userMsg.className = 'bg-amber-600/20 border border-amber-500/30 p-3 rounded-xl max-w-[85%] ml-auto';
-            userMsg.textContent = input.value;
+            userMsg.textContent = text;
             container.appendChild(userMsg);
-            
             input.value = '';
             container.scrollTop = container.scrollHeight;
+
+            // Փորձում ենք ուղարկել Supabase բազա, եթե կապված է
+            if(supabaseClient) {
+                try {
+                    await supabaseClient.from('leads').insert([
+                        { 
+                            customer_name: 'Այցելու (AI չատ)', 
+                            customer_phone: text, 
+                            service_category: 'Ընդհանուր հայտ',
+                            description: text,
+                            source: 'ai_chat',
+                            status: 'new'
+                        }
+                    ]);
+                } catch(e) {
+                    console.error(e);
+                }
+            }
 
             setTimeout(() => {
                 const aiMsg = document.createElement('div');
                 aiMsg.className = 'bg-slate-800/60 p-3 rounded-xl max-w-[85%]';
-                aiMsg.textContent = 'Շնորհակալություն տեղեկության համար։ Ձեր հայտը գրանցվեց համակարգում, և մեր տնօրենները շատ շուտով կկապնվեն ձեզ հետ։';
+                aiMsg.textContent = 'Շնորհակալություն։ Ձեր հայտը հաջողությամբ գրանցվեց համակարգում, և մեր տնօրենները շատ շուտով կկապնվեն ձեզ հետ։';
                 container.appendChild(aiMsg);
                 container.scrollTop = container.scrollHeight;
             }, 1000);
