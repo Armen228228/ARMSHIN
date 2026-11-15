@@ -3,8 +3,8 @@
 This is the initial source-code foundation, not a deployed production system.
 
 ## Architecture
-- `apps/baron`: separate BARON management application (Next.js + TypeScript).
-- `database/schema.sql`: PostgreSQL/Supabase schema for directors, requests, partners, quotes, deals, expenses, commissions and append-only audit events.
+- `app/`: BARON management application routes, root layout, and styles (Next.js + TypeScript).
+- `schema.sql`: PostgreSQL/Supabase schema for directors, requests, partners, quotes, deals, expenses, commissions and append-only audit events.
 - Customer-facing website and AI integration are intentionally not enabled in this foundation. They will be added only after authentication and data access are tested.
 
 ## Important security status
@@ -16,12 +16,16 @@ This is the initial source-code foundation, not a deployed production system.
 Requires Node.js 20.9+.
 
 ```bash
-cd apps/baron
 npm install
-cp .env.example .env.local
 npm run dev
 ```
 
 Open http://localhost:3000.
 
 The current screen is a non-production foundation dashboard. Authentication and database connection are not yet wired up.
+
+## Netlify deployment
+
+The Next.js project lives at the repository root. `netlify.toml` sets the base directory to `.`, the build command to `npm run build`, and the publish directory to `.next`. Netlify automatically detects Next.js and uses its Next.js runtime integration.
+
+The root-level `index.html` and `baron.html` are standalone prototypes; the deployed Next.js homepage is defined in `app/page.tsx`.
